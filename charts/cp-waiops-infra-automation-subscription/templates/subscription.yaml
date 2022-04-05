@@ -1,0 +1,12 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: ibm-infrastructure-automation-operator
+  namespace: {{ .Values.namespace }}
+spec:
+  channel: v3.3
+  installPlanApproval: Automatic
+  name: ibm-infrastructure-automation-operator
+  source: ibm-operator-catalog
+  sourceNamespace: openshift-marketplace
+  startingCSV: ibm-infrastructure-automation-operator.v3.3.0

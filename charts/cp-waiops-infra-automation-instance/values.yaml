@@ -1,0 +1,8 @@
+# Default values for ibm-cp-waiops.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+namespace: cp4waiops
+imagePullSecret: ibm-entitlement-key
+storageClass: ibmc-file-gold-gid
+storageClassLargeBlock: ibmc-file-gold-gid

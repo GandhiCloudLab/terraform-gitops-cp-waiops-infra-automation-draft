@@ -1,0 +1,44 @@
+name: gitops-cp-waiops-infra-automation
+type: gitops
+description: Module to populate a gitops repo with the resources to provision cp-waiops-infra-automation
+tags:
+  - tools
+  - gitops
+versions:
+  - platforms:
+      - ocp4
+    dependencies:
+      - id: gitops
+        refs:
+          - source: github.com/cloud-native-toolkit/terraform-tools-gitops.git
+            version: '>= 1.1.0'
+      - id: namespace
+        refs:
+          - source: github.com/cloud-native-toolkit/terraform-gitops-namespace.git
+            version: '>= 1.0.0'
+      - id: namespace
+        refs:
+          - source: github.com/cloud-native-toolkit/terraform-gitops-cp-catalogs-waiops-infra-automation.git
+            version: '>= 1.0.0'
+    variables:
+      - name: gitops_config
+        moduleRef:
+          id: gitops
+          output: gitops_config
+      - name: git_credentials
+        moduleRef:
+          id: gitops
+          output: git_credentials
+      - name: server_name
+        moduleRef:
+          id: gitops
+          output: server_name
+      - name: namespace
+        moduleRef:
+          id: namespace
+          output: name
+      - name: kubeseal_cert
+        moduleRef:
+          id: gitops
+          output: sealed_secrets_cert
+softwareProvider: ibm-cp

@@ -1,0 +1,11 @@
+apiVersion: v2
+name: cp-waiops-infra-automation-subscription
+description: A Helm chart for in install the IBM Cloud Pak for Watson AIOps Infra-Automation - Subscription
+type: application
+version: 0.1.1
+appVersion: "1.0"
+# dependencies:
+#   - name: ibm-cp-waiops
+#     version: 0.1.0
+#     repository: https://charts.cloudnativetoolkit.dev
+
