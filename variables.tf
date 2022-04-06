@@ -103,3 +103,15 @@ variable "catalog_source_name" {
   type        = string
   description = "WAIOps Catalog Source"
 }
+
+variable "subscription_channel" {
+  type        = string
+  description = "WAIOps subscription channel"
+  default     = "v3.3"
+}
+
+variable "subscription_startingCSV" {
+  type        = string
+  description = "WAIOps subscription startingCSV"
+  default     = "ibm-infrastructure-automation-operator.v3.3.0"
+}

@@ -4,3 +4,5 @@
 
 namespace: cp4waiops
 catalog_source: ibm-operator-catalog
+subscription_channel: v3.3
+subscription_startingCSV: ibm-infrastructure-automation-operator.v3.3.0

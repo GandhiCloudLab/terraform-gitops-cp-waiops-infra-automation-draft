@@ -4,9 +4,9 @@ metadata:
   name: ibm-infrastructure-automation-operator
   namespace: {{ .Values.namespace }}
 spec:
-  channel: v3.3
+  channel: {{ .Values.subscription_channel }}
   installPlanApproval: Automatic
   name: ibm-infrastructure-automation-operator
   source: {{ .Values.catalog_source }}
   sourceNamespace: openshift-marketplace
-  startingCSV: ibm-infrastructure-automation-operator.v3.3.0
+  startingCSV: {{ .Values.subscription_startingCSV }}

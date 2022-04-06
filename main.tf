@@ -10,6 +10,8 @@ locals {
   values_content_subscription = {
     namespace = var.namespace
     catalog_source = var.catalog_source_name
+    subscription_channel = var.subscription_channel
+    subscription_startingCSV = var.subscription_startingCSV
   }
   values_content_instance = {
     namespace = var.namespace
