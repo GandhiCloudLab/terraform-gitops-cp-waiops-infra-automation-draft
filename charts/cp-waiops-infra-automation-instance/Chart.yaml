@@ -1,6 +1,6 @@
 apiVersion: v2
 name: cp-waiops-infra-automation-instance
-description: A Helm chart for in install the IBM Cloud Pak for Watson AIOps Infra-Automation - Instance
+description: A Helm chart for in install the IBM Cloud Pak for Watson AIOps Infra-Automation
 type: application
 version: 0.1.1
 appVersion: "1.0"

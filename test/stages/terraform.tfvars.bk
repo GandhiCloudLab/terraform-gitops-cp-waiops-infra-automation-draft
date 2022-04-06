@@ -19,6 +19,6 @@ cluster_type="openshift"
 
 entitlement_key="eyJhbGciOiJIUzI1NiJ9.eyJpc3M-------------------DAy8MTLepjy5Hewr-e4Zog"
 
-cp_waiops_storageClass="ibmc-file-gold-gid"
+storageClass="ibmc-file-gold-gid"
 
-cp_waiops_storageClassLargeBlock="ibmc-file-gold-gid"
+storageClassLargeBlock="ibmc-file-gold-gid"

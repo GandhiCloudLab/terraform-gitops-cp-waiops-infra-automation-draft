@@ -16,9 +16,9 @@ versions:
         refs:
           - source: github.com/cloud-native-toolkit/terraform-gitops-namespace.git
             version: '>= 1.0.0'
-      - id: namespace
+      - id: cp-catalogs-waiops
         refs:
-          - source: github.com/cloud-native-toolkit/terraform-gitops-cp-catalogs-waiops-infra-automation.git
+          - source: github.com/cloud-native-toolkit/terraform-gitops-cp-catalogs-waiops.git
             version: '>= 1.0.0'
     variables:
       - name: gitops_config
@@ -41,4 +41,12 @@ versions:
         moduleRef:
           id: gitops
           output: sealed_secrets_cert
+      - name: catalog_source_name
+        moduleRef:
+          id: cp-catalogs-waiops
+          output: catalog_ibmoperators_waiops_aimgr
+      - name: entitlement_key
+        moduleRef:
+          id: cp-catalogs-waiops
+          output: entitlement_key
 softwareProvider: ibm-cp

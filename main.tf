@@ -7,32 +7,28 @@ locals {
   service_url = "http://${local.name}.${var.namespace}"
   image_pullsecret_name = "ibm-entitlement-key"
 
-  values_content_operatorgroup = {
-    namespace = var.namespace
-  }
   values_content_subscription = {
     namespace = var.namespace
+    catalog_source = var.catalog_source_name
   }
   values_content_instance = {
     namespace = var.namespace
-    imagePullSecret = var.image_pullsecret_name
+    imagePullSecret = local.image_pullsecret_name
     storageClass = var.storageClass
-    storageClassLargeBlock = var.storageClassLargeBlock
   }
   
   layer              = "services"
   type               = "instances"
   application_branch = "main"
   namespace          = var.namespace
-  pullsecret_name    = var.pullsecret_name
   layer_config       = var.gitops_config[local.layer]
 }
+
+##### --------- --------- ---------  Pre Install  --------- --------- ---------  
 
 module "setup_clis" {
   source = "github.com/cloud-native-toolkit/terraform-util-clis.git"
 }
-
-##### --------- --------- ---------  Pre Install  --------- --------- ---------  
 
 module pull_secret {
   source = "github.com/cloud-native-toolkit/terraform-gitops-pull-secret"
@@ -45,62 +41,12 @@ module pull_secret {
   docker_username = "cp"
   docker_password = var.entitlement_key
   docker_server   = "cp.icr.io"
-  secret_name     = var.image_pullsecret_name
+  secret_name     = local.image_pullsecret_name
 }
-
-##### --------- --------- ---------  OperatorGroup  --------- --------- ---------  
-
-resource "null_resource" "create_yaml_operatorgroup" {
-  provisioner "local-exec" {
-    command = "${path.module}/scripts/create-yaml.sh  '${local.chart_dir}-operatorgroup' '${local.yaml_dir}-operatorgroup'"
-
-    environment = {
-      VALUES_CONTENT = yamlencode(local.values_content_operatorgroup)
-    }
-  }
-}
-
-resource "null_resource" "setup_gitops_operatorgroup" {
-  depends_on = [null_resource.create_yaml_operatorgroup]
-
-  triggers = {
-    name            = "${local.chart_prefix}-operatorgroup"
-    namespace       = var.namespace
-    yaml_dir        = "${local.yaml_dir}-operatorgroup"
-    server_name     = var.server_name
-    layer           = "services"
-    type            = "operators"
-    git_credentials = yamlencode(var.git_credentials)
-    gitops_config   = yamlencode(var.gitops_config)
-    bin_dir         = local.bin_dir
-  }
-
-  provisioner "local-exec" {
-    command = "${self.triggers.bin_dir}/igc gitops-module '${self.triggers.name}' -n '${self.triggers.namespace}' --contentDir '${self.triggers.yaml_dir}' --serverName '${self.triggers.server_name}' -l '${self.triggers.layer}' --type '${self.triggers.type}'"
-
-    environment = {
-      GIT_CREDENTIALS = nonsensitive(self.triggers.git_credentials)
-      GITOPS_CONFIG   = self.triggers.gitops_config
-    }
-  }
-
-  provisioner "local-exec" {
-    when    = destroy
-    command = "${self.triggers.bin_dir}/igc gitops-module '${self.triggers.name}' -n '${self.triggers.namespace}' --delete --contentDir '${self.triggers.yaml_dir}' --serverName '${self.triggers.server_name}' -l '${self.triggers.layer}' --type '${self.triggers.type}'"
-
-    environment = {
-      GIT_CREDENTIALS = nonsensitive(self.triggers.git_credentials)
-      GITOPS_CONFIG   = self.triggers.gitops_config
-    }
-  }
-
-}
-
 
 ##### --------- --------- ---------  Subscription  --------- --------- ---------  
 
 resource "null_resource" "create_yaml_subscription" {
-    depends_on = [null_resource.setup_gitops_operatorgroup]
 
   provisioner "local-exec" {
     command = "${path.module}/scripts/create-yaml.sh  '${local.chart_dir}-subscription' '${local.yaml_dir}-subscription'"

@@ -104,14 +104,8 @@ variable "entitlement_key" {
   default     = "default"
 }
 
-variable "cp_waiops_storageClass" {
+variable "storageClass" {
   type        = string
   description = "WAIOps Storage Class"
-  default     = "ibmc-file-gold-gid"
-}
-
-variable "cp_waiops_storageClassLargeBlock" {
-  type        = string
-  description = "WAIOps Storage Class Block"
   default     = "ibmc-file-gold-gid"
 }

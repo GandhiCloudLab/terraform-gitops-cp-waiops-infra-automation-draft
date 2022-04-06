@@ -7,6 +7,6 @@ spec:
   channel: v3.3
   installPlanApproval: Automatic
   name: ibm-infrastructure-automation-operator
-  source: ibm-operator-catalog
+  source: {{ .Values.catalog_source }}
   sourceNamespace: openshift-marketplace
   startingCSV: ibm-infrastructure-automation-operator.v3.3.0

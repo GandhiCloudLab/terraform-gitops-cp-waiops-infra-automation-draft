@@ -5,4 +5,3 @@
 namespace: cp4waiops
 imagePullSecret: ibm-entitlement-key
 storageClass: ibmc-file-gold-gid
-storageClassLargeBlock: ibmc-file-gold-gid
